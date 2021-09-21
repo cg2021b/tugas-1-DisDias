@@ -1,25 +1,18 @@
-# Tugas 1 Dias Tri Kurniasari // 05111940000035
+# Tugas 1 Dias Tri Kurniasari - 05111940000035
 # Gelas
 
-Pada Tugas 1 ini saya memilih untuk memfoto gelas dari 4 sudut pandang
+**Pada Tugas 1 ini saya memilih untuk memfoto gelas dari 4 sudut pandang**
 <br>
 ## Depan Atas
-<img src = "asset\depan.png" width="500" height="300"></img>
+<img src = "asset\depan.png"></img>
 <br>
-<br>
-
 ## Belakang Atas
-<img src = "asset\belakang.png" width="500" heightt="300"></img>
+<img src = "asset\belakang.png"></img>
 <br>
-<br>
-
 ## Kanan Atas
-<img src = "asset\kanan.png" width="500" height="300"></img>
+<img src = "asset\kanan.png"></img>
 <br>
-<br>
-
 ## Kiri Atas
-<img src = "asset\kiri.png" width="500" height="300"></img>
+<img src = "asset\kiri.png"></img>
 <br>
-<br>
-Terimakasih
+**Terimakasih**
