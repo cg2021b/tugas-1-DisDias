@@ -5,14 +5,10 @@
 <br>
 ## Depan Atas
 <img src = "asset\depan.png"></img>
-<br>
 ## Belakang Atas
 <img src = "asset\belakang.png"></img>
-<br>
 ## Kanan Atas
 <img src = "asset\kanan.png"></img>
-<br>
 ## Kiri Atas
 <img src = "asset\kiri.png"></img>
-<br>
 **Terimakasih**
