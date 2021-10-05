@@ -4,7 +4,7 @@
 ## Hasil WebGl
 Hasil dapat dilihat pada foto dibawah ini :
 <br>
-<img src = "asset\jadi1.jpg"></img>
+<img src = "asset\jadi.png"></img>
 
 **Pada Tugas 1 ini saya memilih untuk memfoto gelas dari 4 sudut pandang**
 <br>

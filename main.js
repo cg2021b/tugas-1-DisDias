@@ -1,292 +1,330 @@
-function main()
+function sin(a)
+    {
+        return Math.sin(Math.PI * a);
+    }
+
+function cos(a)
 {
+    return Math.cos(Math.PI * a);
+}
+
+function main(){
+
     var canvas = document.getElementById('myCanvas');   //kertas
     var gl = canvas.getContext('webgl');                //alat
 
-    //nanti buat vertices dan lokasinya ya yas disini yang panjang
-    //gambar 1 
-    /**
-     * A(0.7, 0.65)
-        B(0.85, 0.65)
-        C(0.625, 0.25)
-        D(0.675, 0.6)
-        E(0.8, 0.6)
-        F(0.65, 0.325)
-     */
-    const vertexData = {
-        bodyColor : [0/256, 255/256, 127/256],
-        bodyCenter: [0.4, 0.5],
-        bodyA: [0.5, 0.1],
-        bodyB: [0.3, 0.1],
-        bodyC: [0.2, 0.2],
-        bodyD: [0.1, 0.8],
-        bodyE: [0.2, 0.7],
-        bodyF: [0.6, 0.7],
-        bodyG: [0.7, 0.8],
-        bodyH: [0.6, 0.2],
-        bodyI: [0.2, 0.9],
-        bodyJ: [0.6, 0.9],
+    var kiri = [];
 
-        topColor: [50/256, 205/256, 50/256],
-        topCenter: [0.4, 0.8],
+    //lingkaran bagian atas
+    for(var i = 0; i<=180; i+=1)
+    {
+        var j = (i + 270) / 180;
+        var k = (i+271) / 180;
+        var vertex1 = [
+            sin(j) * 0.3 - 0.5 , cos(j) * 0.15 + 0.3, 
+            50/256, 205/256, 50/256, // color
+        ];
 
-        handleA: [0.675, 0.65],
-        handleB: [0.9, 0.65],
-        handleC: [0.625, 0.35],
-        handleD: [0.66, 0.6],
-        handleE: [0.775, 0.6],
-        handleF: [0.64, 0.44]
+        var vertex2 = [
+            -0.5, 0.3, 
+            50/256, 205/256, 50/256, // color
+        ];
 
-    };
-    /**
-     * top:
-     * EDI
-     * EFI
-     * FIJ
-     * FGJ
-     * 
-     * body:
-     * CDE 
-     * BCE 
-     * ABE 
-     * AFE 
-     * AFH 
-     * FGH
-     * 
-     * handle:
-     * ADE 
-     * ABE
-     * BCE 
-     * CEF
-     */
-     
-     
-     
-     
+        var vertex3 = [
+            sin(k) * 0.3 - 0.5 , cos(k) * 0.15 + 0.3, 
+            50/256, 205/256, 50/256, //color
+        ];
 
-    //gambar 2
-    const vertexData2 = {
-        bodyColor : [0/256, 255/256, 127/256],
-        bodyCenter: [-0.4, 0.5],
-        bodyA: [-0.5, 0.1],
-        bodyB: [-0.3, 0.1],
-        bodyC: [-0.2, 0.2],
-        bodyD: [-0.1, 0.8],
-        bodyE: [-0.2, 0.7],
-        bodyF: [-0.6, 0.7],
-        bodyG: [-0.7, 0.8],
-        bodyH: [-0.6, 0.2],
-        bodyI: [-0.2, 0.9],
-        bodyJ: [-0.6, 0.9],
+        kiri = kiri.concat(vertex1, vertex2, vertex3);
+    }
 
-        topColor: [50/256, 205/256, 50/256], 
-        topCenter: [-0.4, 0.8],
+    //lingkaran bagian bawah
+    for(var i = 90; i<=270; i+=1)
+    {
+        var j = i / 180;
+        var k = (i+1)  / 180;
+        var vertex1 = [
+            sin(j) * 0.2 - 0.5 , cos(j) * 0.1 - 0.5,
+            50/256, 205/256, 50/256, //color
+        ];
 
-        handleA: [-0.675, 0.65],
-        handleB: [-0.9, 0.65],
-        handleC: [-0.625, 0.35],
-        handleD: [-0.66, 0.6],
-        handleE: [-0.775, 0.6],
-        handleF: [-0.64, 0.44]
+        var vertex2 = [
+            -0.5, -0.5, 
+            50/256, 205/256, 50/256,
+        ];
 
-    };
+        var vertex3 = [
+            sin(k) * 0.2 - 0.5 , cos(k) * 0.1 - 0.5, 
+            50/256, 205/256, 50/256,
+        ];
 
-    const vertices = [
-        //body
-        ...vertexData.bodyC, ...vertexData.bodyColor,
-        ...vertexData.bodyD, ...vertexData.bodyColor,
-        ...vertexData.bodyE, ...vertexData.bodyColor,
+        kiri = kiri.concat(vertex1, vertex2, vertex3);
+    }
+    
+    var A = kiri.slice(180*5*3, 180*5*3+2);
+    A = A.concat([152/256, 251/256, 152/256,]);
+    var B = kiri.slice(181*5*3, 181*5*3+5);
+    var C = kiri.slice(5, 7);
+    C = C.concat([152/256, 251/256, 152/256,]);
+    var D = kiri.slice(361*5*3, 361*5*3+5);
+    var E = kiri.slice(0*5*3, 0*5*3+2);
+    E = E.concat([152/256, 251/256, 152/256,]);
 
-        ...vertexData.bodyB, ...vertexData.bodyColor,
-        ...vertexData.bodyC, ...vertexData.bodyColor,
-        ...vertexData.bodyE, ...vertexData.bodyColor,
+    kiri = kiri.concat(A, B, C);
+    kiri = kiri.concat(B, C, D);
+    kiri = kiri.concat(C, D, E);
 
-        ...vertexData.bodyA, ...vertexData.bodyColor,
-        ...vertexData.bodyB, ...vertexData.bodyColor,
-        ...vertexData.bodyE, ...vertexData.bodyColor,
+    //lingkaran bagian bawah atas
+    for(var i = 0; i<=180; i+=1)
+    {
+        var j = (i + 90) / 180;
+        var k = (i+91)  / 180;
+        var vertex1 = [
+            sin(j) * 0.3 - 0.5 , cos(j) * 0.15 + 0.3, 
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData.bodyA, ...vertexData.bodyColor,
-        ...vertexData.bodyF, ...vertexData.bodyColor,
-        ...vertexData.bodyE, ...vertexData.bodyColor,
+        var vertex2 = [
+            -0.5, 0.3, 
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData.bodyA, ...vertexData.bodyColor,
-        ...vertexData.bodyF, ...vertexData.bodyColor,
-        ...vertexData.bodyH, ...vertexData.bodyColor, 
+        var vertex3 = [
+            sin(k) * 0.3 - 0.5 , cos(k) * 0.15 + 0.3, 
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData.bodyF, ...vertexData.bodyColor,
-        ...vertexData.bodyG, ...vertexData.bodyColor,
-        ...vertexData.bodyH, ...vertexData.bodyColor, //6x3  x5 = 90
+        kiri = kiri.concat(vertex1, vertex2, vertex3);
+    }
 
-        //top
-        ...vertexData.bodyE, ...vertexData.topColor,
-        ...vertexData.bodyD, ...vertexData.topColor,
-        ...vertexData.bodyI, ...vertexData.topColor,
+    var kanan = [];
+    //lingkaran bagian atas
+    for(var i = 0; i<=180; i+=1)
+    {
+        var j = (i + 270)  / 180;
+        var k = (i+271)  / 180;
+        var vertex1 = [
+            sin(j) * 0.3 + 0.6 , cos(j) * 0.15 + 0.3, 
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData.bodyE, ...vertexData.topColor,
-        ...vertexData.bodyF, ...vertexData.topColor,
-        ...vertexData.bodyI, ...vertexData.topColor,
+        var vertex2 = [
+            0.0, 0.3, // ini diubah biar kaya ada handlenya
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData.bodyF, ...vertexData.topColor,
-        ...vertexData.bodyI, ...vertexData.topColor,
-        ...vertexData.bodyJ, ...vertexData.topColor,
+        var vertex3 = [
+            sin(k) * 0.3 + 0.6 , cos(k) * 0.15 + 0.3, 
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData.bodyF, ...vertexData.topColor,
-        ...vertexData.bodyG, ...vertexData.topColor,
-        ...vertexData.bodyJ, ...vertexData.topColor, // 4x3
+        kanan = kanan.concat(vertex1,  vertex2, vertex3);
+    }
 
-        //side
-        ...vertexData.handleA, ...vertexData.bodyColor,
-        ...vertexData.handleD, ...vertexData.bodyColor,
-        ...vertexData.handleE, ...vertexData.bodyColor,
+    //lingkaran bagian bawah
+    for(var i = 90; i<=270; i+=1)
+    {
+        var j = i  / 180;
+        var k = (i+1)  / 180;
+        var vertex1 = [
+            sin(j) * 0.2 + 0.6 , cos(j) * 0.1 - 0.5, 
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData.handleA, ...vertexData.bodyColor,
-        ...vertexData.handleB, ...vertexData.bodyColor,
-        ...vertexData.handleE, ...vertexData.bodyColor,
+        var vertex2 = [
+            0.6, -0.5, 
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData.handleB, ...vertexData.bodyColor,
-        ...vertexData.handleC, ...vertexData.bodyColor,
-        ...vertexData.handleE, ...vertexData.bodyColor,
+        var vertex3 = [
+            sin(k) * 0.2 + 0.6 , cos(k) * 0.1 - 0.5, 
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData.handleC, ...vertexData.bodyColor,
-        ...vertexData.handleE, ...vertexData.bodyColor,
-        ...vertexData.handleF, ...vertexData.bodyColor, //4x3 = 42   x5
+        kanan = kanan.concat(vertex1, vertex2, vertex3);
+    }
+    
+    var A = kanan.slice(180*5*3, 180*5*3+2);
+    A = A.concat([152/256, 251/256, 152/256,]);
+    var B = kanan.slice(181*5*3, 181*5*3+5);
+    var C = kanan.slice(5, 7);
+    C = C.concat([152/256, 251/256, 152/256,]);
+    var D = kanan.slice(361*5*3, 361*5*3+5);
+    var E = kanan.slice(0*5*3, 0*5*3+2);
+    E = E.concat([50/256, 205/256, 50/256,]);
 
-        //body
-        ...vertexData2.bodyC, ...vertexData2.bodyColor,
-        ...vertexData2.bodyD, ...vertexData2.bodyColor,
-        ...vertexData2.bodyE, ...vertexData2.bodyColor,
+    kanan = kanan.concat(A, B, C);
+    kanan = kanan.concat(B, C, D);
+    kanan = kanan.concat(C, D, E);
 
-        ...vertexData2.bodyB, ...vertexData2.bodyColor,
-        ...vertexData2.bodyC, ...vertexData2.bodyColor,
-        ...vertexData2.bodyE, ...vertexData2.bodyColor,
+    //pegangan bagian atas
+    for(var i = 0; i<=90; i+=1)
+    {
+        var j = (i + 270)  / 180;
+        var k = (i+271)  / 180;
+        var vertex1 = [
+            sin(j) * 0.2 + 0.3 , cos(j) * 0.05 + 0.15, 
+            205/256, 133/256, 63/256,
+        ];
 
-        ...vertexData2.bodyA, ...vertexData2.bodyColor,
-        ...vertexData2.bodyB, ...vertexData2.bodyColor,
-        ...vertexData2.bodyE, ...vertexData2.bodyColor,
+        var vertex2 = [
+            0.325, 0.15, // ini diubah biar kaya ada handlenya
+            205/256, 133/256, 63/256,
+        ];
 
-        ...vertexData2.bodyA, ...vertexData2.bodyColor,
-        ...vertexData2.bodyF, ...vertexData2.bodyColor,
-        ...vertexData2.bodyE, ...vertexData2.bodyColor,
+        var vertex3 = [
+            sin(k) * 0.2 + 0.3 , cos(k) * 0.05 + 0.15, 
+            205/256, 133/256, 63/256,
+        ];
 
-        ...vertexData2.bodyA, ...vertexData2.bodyColor,
-        ...vertexData2.bodyF, ...vertexData2.bodyColor,
-        ...vertexData2.bodyH, ...vertexData2.bodyColor, 
+        kanan = kanan.concat(vertex1,  vertex2, vertex3);
+    }
 
-        ...vertexData2.bodyF, ...vertexData2.bodyColor,
-        ...vertexData2.bodyG, ...vertexData2.bodyColor,
-        ...vertexData2.bodyH, ...vertexData2.bodyColor, //6x3
+    //pegangan bagian bawah
+    for(var i = 90; i<=180; i+=1)
+    {
+        var j = (i + 90)  / 180;
+        var k = (i+91)  / 180;
+        var vertex1 = [
+            sin(j) * 0.2 + 0.3 , cos(j) * 0.05 + 0.15, 
+            205/256, 133/256, 63/256,
+        ];
 
-        //top
-        ...vertexData2.bodyE, ...vertexData2.topColor,
-        ...vertexData2.bodyD, ...vertexData2.topColor,
-        ...vertexData2.bodyI, ...vertexData2.topColor,
+        var vertex2 = [
+            0.325, 0.15, 
+            205/256, 133/256, 63/256,
+        ];
 
-        ...vertexData2.bodyE, ...vertexData2.topColor,
-        ...vertexData2.bodyF, ...vertexData2.topColor,
-        ...vertexData2.bodyI, ...vertexData2.topColor,
+        var vertex3 = [
+            sin(k) * 0.2 + 0.3 , cos(k) * 0.05 + 0.15, 
+            205/256, 133/256, 63/256,
+        ];
 
-        ...vertexData2.bodyF, ...vertexData2.topColor,
-        ...vertexData2.bodyI, ...vertexData2.topColor,
-        ...vertexData2.bodyJ, ...vertexData2.topColor,
+        kanan = kanan.concat(vertex1, vertex2, vertex3);
+    }
 
-        ...vertexData2.bodyF, ...vertexData2.topColor,
-        ...vertexData2.bodyG, ...vertexData2.topColor,
-        ...vertexData2.bodyJ, ...vertexData2.topColor, // 4x3
+    //lingkaran bagian bawah atas
+    for(var i = 0; i<=180; i+=1)
+    {
+        var j = (i + 90)  / 180;
+        var k = (i+91)  / 180;
+        var vertex1 = [
+            sin(j) * 0.3 + 0.6 , cos(j) * 0.15 + 0.3, 
+            50/256, 205/256, 50/256,
+        ];
 
-        //side
-        ...vertexData2.handleA, ...vertexData2.bodyColor,
-        ...vertexData2.handleD, ...vertexData2.bodyColor,
-        ...vertexData2.handleE, ...vertexData2.bodyColor,
+        var vertex2 = [
+            0.6, 0.3, 
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData2.handleA, ...vertexData2.bodyColor,
-        ...vertexData2.handleB, ...vertexData2.bodyColor,
-        ...vertexData2.handleE, ...vertexData2.bodyColor,
+        var vertex3 = [
+            sin(k) * 0.3 + 0.6 , cos(k) * 0.15 + 0.3, 
+            50/256, 205/256, 50/256,
+        ];
 
-        ...vertexData2.handleB, ...vertexData2.bodyColor,
-        ...vertexData2.handleC, ...vertexData2.bodyColor,
-        ...vertexData2.handleE, ...vertexData2.bodyColor,
+        kanan = kanan.concat(vertex1, vertex2, vertex3);
+    }
 
-        ...vertexData2.handleC, ...vertexData2.bodyColor,
-        ...vertexData2.handleE, ...vertexData2.bodyColor,
-        ...vertexData2.handleF, ...vertexData2.bodyColor, //4x3 = 42
-    ];
+    var vertices = [...kiri, ...kanan]
 
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    var kiri_len = kiri.length / 5;
+    var kanan_len = kanan.length / 5;
+
+    var buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vertexShader, `
-    precision mediump float;
-    attribute vec2 position;
-    attribute vec3 color;
+    var vertexShaderCode = `
+    attribute vec2 aPosition;
+    attribute vec3 aColor;
     varying vec3 vColor;
-    void main()
-    {
-        vColor = color;
-        gl_Position = vec4(position, 0.0, 1.0);
-    }`);
+    uniform mat4 u_matrix;
+
+    void main(){
+        gl_Position = u_matrix * vec4(aPosition, 0, 1);
+        vColor = aColor;
+    }`;
+
+    var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(vertexShader, vertexShaderCode);
     gl.compileShader(vertexShader);
 
-    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fragmentShader, `
+    var compiled = gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS);
+    if (!compiled) {
+        console.error(gl.getShaderInfoLog(vertexShader));
+    }
+
+    var fragmentShaderCode = `
     precision mediump float;
     varying vec3 vColor;
-    void main()
-    {
-        gl_FragColor = vec4(vColor, 1);
-    }`);
+
+    void main(){
+        gl_FragColor = vec4(vColor, 1.0);
+    }
+    `;
+
+    var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(fragmentShader,fragmentShaderCode);
     gl.compileShader(fragmentShader);
-    console.log(gl.getShaderInfoLog(fragmentShader));
 
-    const program = gl.createProgram();
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
+    compiled = gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS);
+    if (!compiled) {
+        console.error(gl.getShaderInfoLog(fragmentShader));
+    }
 
-    gl.linkProgram(program);
-    gl.useProgram(program);
+    var shaderProgram = gl.createProgram();
+    gl.attachShader(shaderProgram, vertexShader);
+    gl.attachShader(shaderProgram, fragmentShader);
+    gl.linkProgram(shaderProgram);
 
-    const positionLocation = gl.getAttribLocation(program, `position`);
-    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 0);
-    gl.enableVertexAttribArray(positionLocation);
 
-    const aColor = gl.getAttribLocation(program, `color`);
-    gl.vertexAttribPointer(aColor, 3, gl.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
+    var linked = gl.getProgramParameter(shaderProgram, gl.LINK_STATUS);
+    if (!linked) {
+        console.error(gl.getProgramInfoLog(shaderProgram));
+    }
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    var aPosition = gl.getAttribLocation(shaderProgram, `aPosition`);
+    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 5*Float32Array.BYTES_PER_ELEMENT, 0);
+    gl.enableVertexAttribArray(aPosition);
+
+    var aColor = gl.getAttribLocation(shaderProgram, `aColor`);
+    gl.vertexAttribPointer(aColor, 3, gl.FLOAT, false, 5*Float32Array.BYTES_PER_ELEMENT, 2*Float32Array.BYTES_PER_ELEMENT);
     gl.enableVertexAttribArray(aColor);
 
-
-
-    var speedRaw = 1;
-    var speed = 0.0035;
-    var change = 0;
-    var counter = 0;
-    var uChange = gl.getUniformLocation(program, "uChange");
-
-    function moveVertices () {
+    let uchange = 0;
+    let speed = 0.0035;
+    function drawScene() {
+        if(uchange >= 0.5 || uchange <=-0.3) speed = -speed;
+        uchange += speed;
+        gl.useProgram(shaderProgram);
+        const Objekkiri = [
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0,
+        ]
         
-        if (vertices[16] < -1.0 || vertices[101] > 1.0) {
-            speed = speed * -1;
-        }
+        const Objekkanan = [
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, uchange, 0.0, 1.0,
+        ]
         
-        for (let i = 1; i < vertices.length / 2; i += 5) {
-            vertices[i] = vertices[i] + speed;
-        }
-    }
-
-
-    function render() {
-        moveVertices();
-        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-
-        // if (change >= 0.5 || change <= -0.5) speed = -speed;
-        change = change + speed;
-        gl.uniform1f(uChange, change);
-        
-        gl.clearColor(205/256, 133/256, 63/256, 1.0);
+        gl.clearColor(205/256, 133/256, 63/256, 1);
         gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.TRIANGLES, 0, 84);
-        requestAnimationFrame(render);
+
+        const u_matrix = gl.getUniformLocation(shaderProgram, 'u_matrix');
+        gl.uniformMatrix4fv(u_matrix, false, Objekkiri);
+    
+        gl.drawArrays(gl.TRIANGLES, 0, kiri_len);
+        
+        gl.uniformMatrix4fv(u_matrix, false, Objekkanan);
+        gl.drawArrays(gl.TRIANGLES, kiri_len, kanan_len);
+
+        requestAnimationFrame(drawScene);
     }
-    requestAnimationFrame(render);
+    drawScene();
 }
