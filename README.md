@@ -1,6 +1,11 @@
 # Tugas 1 Dias Tri Kurniasari - 05111940000035
 # Gelas
 
+## Hasil WebGl
+Hasil dapat dilihat pada foto dibawah ini :
+<br>
+<img src = "asset\jadi1.jpg"></img>
+
 **Pada Tugas 1 ini saya memilih untuk memfoto gelas dari 4 sudut pandang**
 <br>
 
