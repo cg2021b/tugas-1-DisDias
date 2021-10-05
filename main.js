@@ -257,7 +257,7 @@ function main()
 
 
     var speedRaw = 1;
-    var speed = 0.0053;
+    var speed = 0.0035;
     var change = 0;
     var counter = 0;
     var uChange = gl.getUniformLocation(program, "uChange");
