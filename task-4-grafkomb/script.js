@@ -76,7 +76,7 @@ window.addEventListener('resize', () =>
 // Camera
 
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.x = -10;
+camera.position.x = 0;
 camera.position.y = 5;
 camera.position.z = 15;
 scene.add(camera);
@@ -116,20 +116,20 @@ scene.background = textureMoon;
 
 //object plane
 const loader4 = new THREE.TextureLoader();
-const grass = loader4.load('./img/sand.jpg');
-grass.wrapS = THREE.RepeatWrapping;
-grass.wrapT = THREE.RepeatWrapping;
+const sand = loader4.load('./img/sand.jpg');
+sand.wrapS = THREE.RepeatWrapping;
+sand.wrapT = THREE.RepeatWrapping;
 const repeats = 10;
-grass.repeat.set(repeats, repeats);
+sand.repeat.set(repeats, repeats);
 
-let grassPlane = new THREE.BoxGeometry(20, 20);
-let grassMaterial = new THREE.MeshLambertMaterial({
-    map:grass
+let sandPlane = new THREE.BoxGeometry(25, 20);
+let sandMaterial = new THREE.MeshLambertMaterial({
+    map:sand
 
 });
 
 
-let plane = new THREE.Mesh(grassPlane,grassMaterial);
+let plane = new THREE.Mesh(sandPlane,sandMaterial);
 plane.rotation.x = Math.PI / 2;
 plane.position.y = -5.5;
 plane.receiveShadow = true;
@@ -218,10 +218,10 @@ scene.add(sphereCamera);
 const sphereMirror = new THREE.MeshBasicMaterial({
   envMap: sphereCamera.renderTarget.texture,
 });
-const sphereGeo = new THREE.SphereGeometry(1.5, 32 , 16);
+const sphereGeo = new THREE.SphereGeometry(1.5, 25 , 10);
 const mirrorBall = new THREE.Mesh( sphereGeo, sphereMirror);
-mirrorBall.position.y = 2;
-mirrorBall.position.x = -2;
+mirrorBall.position.y = 5;
+mirrorBall.position.x = 5;
 scene.add(mirrorBall);
 
 //mirror
